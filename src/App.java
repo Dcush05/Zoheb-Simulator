@@ -1,6 +1,7 @@
 import org.jsfml.graphics.*;
 import org.jsfml.system.Vector2f;
 
+import java.awt.Color;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -16,9 +17,15 @@ public class App {
         window.setFramerateLimit(60);
 
         while(window.isOpen()){
-            for(Event event : window.pollEvent()){
+            for(Event event : window.pollEvents()){
+                if(event.type == Event.Type.CLOSED){
+                    window.close();
+                }
+
                 
             }
+            window.clear();
+            window.display();
         }
     }
 }
