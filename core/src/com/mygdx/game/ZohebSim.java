@@ -15,8 +15,9 @@ import com.mygdx.game.Util.Collision;
 import com.mygdx.game.Util.ScrollingBackground;
 
 public class ZohebSim extends ApplicationAdapter {
-	//TODO: Sprite creation for both player and enemies(including targets), Spritestacking(maybe), maybe impprove on player movement plz,ENEMY ENTITIES, Score, Music, Radio, UI(SCORE,HighScore, lives(maybe), Radio, Speedometer), Textfile serilization, menu(mode sselections)
-	//NOTE: When music gets implemented make sure to do scrollling speed calculations based on the pacing of the music, make sure to fix file structure for maps.
+	//*  means done i think idk
+	//TODO: Sprite creation for both player and enemies(including targets), Spritestacking(maybe)*, maybe impprove on player movement plz,ENEMY ENTITIES, Score, Music, Radio, UI(SCORE,HighScore, lives(maybe), Radio, Speedometer), Textfile serilization, menu(mode sselections)
+	//NOTE: When music gets implemented make sure to do scrollling speed calculations based on the pacing of the music, make sure to fix file structure for maps, when making sprites, fix collision plz
 	
 	private final int MAP_ROAD_LEFT_BOUNDS = 223;
 	private final int MAP_ROAD_RIGHT_BOUNDS = 528;
