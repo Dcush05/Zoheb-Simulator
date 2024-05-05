@@ -62,7 +62,9 @@ public class ScrollingBackground {
 	public void setSpeed (float goalSpeed) {
 		this.goalSpeed = goalSpeed;
 	}
-	
+	public float getSpeed(){
+		return this.goalSpeed;
+	}
 	public void setSpeedFixed (boolean speedFixed) {
 		this.speedFixed = speedFixed;
 	}

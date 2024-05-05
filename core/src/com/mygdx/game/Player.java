@@ -7,9 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Disposable;
 
 public class Player {
     public String name;
@@ -18,7 +16,7 @@ public class Player {
     //256X256 8 sprites each sprite is 32x32
     Player(String name){
         this.name = name;
-        playerTexture = new Texture("car1.png"); //car1+ is 32x32  car is 16x16
+        playerTexture = new Texture("assets/entities/player/car1.png"); //car1+ is 32x32  car is 16x16
         //playerSprite = new Sprite(playerTexture,0,0,16,16);
         //playerSprite.setPosition(positionX, positionY);
         pSpriteArray = new ArrayList<Sprite>();
@@ -30,7 +28,7 @@ public class Player {
 
     
     }
-   public void loadSpriteStack(SpriteBatch target, float rotation, int offset){
+   public void loadSpriteStack(SpriteBatch target, float rotation, float offset){
     int spriteW = playerTexture.getWidth()/SPRITE_WIDTH; //top row is for stacking sprites
     int startY = 0;
     pSpriteArray.clear(); ///clears the array of sprites before adding a new one IMPORTANT PLZ DONT TOUCH
@@ -61,7 +59,7 @@ public class Player {
     public void render(SpriteBatch target){
       // playerSprite.draw(target);
       //baseSprite.draw(target);
-      int offset= 1;
+      float offset= 1.f;
       loadSpriteStack(target, 0, offset);
       //baseSprite.draw(target);
        
@@ -76,6 +74,11 @@ public class Player {
         verticleMovement(deltaTime);
         movementInput(deltaTime);
     }
+    public void adjust(int screenWidth, int screenHeight) {
+    // Update the base sprite position relative to the new screen dimensions
+    baseSprite.setPosition((screenWidth - baseSprite.getWidth()) / 2f, (screenHeight - baseSprite.getHeight()) / 2f);
+    // Update positions of stacked sprites if needed
+}
 
     public void horizontalMovement(float deltaTime){
         if (accelerationX == 0) {
@@ -122,7 +125,6 @@ public class Player {
 
     public void movementInput(float deltaTime){
         float rotation = 18f;
-       // float originalRotation = 0;
         
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
             accelerationX = 100;
@@ -140,7 +142,7 @@ public class Player {
         
         if(Gdx.input.isKeyPressed(Input.Keys.W)){
             accelerationY = 100;
-            //System.out.println(getVelocityY());
+            //baseSprite.setRotation(originalRotation);
         }else{
             accelerationY = deAcceleration;  //de accelerates when key is not being pressed, alt(accely += deAccel) the way i have currently is better
         }
@@ -150,12 +152,27 @@ public class Player {
     public float getVelocityY(){
         return velocityY;
     }
+    public float getOriginalPositionY(){
+        return positionY;
+    }
    
     public Rectangle getAABB(){
       //baseSprite.setBounds(pSpriteArray.get(0).getX(), pSpriteArray.get(0).getY(), pSpriteArray.get(0).getWidth(), pSpriteArray.get(0).getWidth());
        
         return baseSprite.getBoundingRectangle();
     }
+    public float getRotation(){
+        return baseSprite.getRotation();
+    }
+    public float getVelocityYInMph(float scale_factor){
+    // Convert velocity from game units to real-world meters per second
+    float velocity_y_m_s = velocityY * scale_factor;
+    
+    // Convert velocity from meters per second to miles per hour
+    float velocity_y_mph = velocity_y_m_s * 2.23694f;
+    
+    return velocity_y_mph;
+}
 
     public boolean roadBoundCollision(int MAP_ROAD_LEFT_BOUNDS, int MAP_ROAD_RIGHT_BOUNDS){
         //Collision between the bounds of the road the offset is tbd based on map if its not accurate idk :p;
@@ -163,7 +180,7 @@ public class Player {
         boolean isBoundColliding = false;
 
         if(baseSprite.getBoundingRectangle().x <= MAP_ROAD_LEFT_BOUNDS){
-            System.out.println("Collision with road bound left");
+           // System.out.println("Collision with road bound left");
             isBoundColliding = true;
             velocityX = 0;
             baseSprite.setRotation(0); //resets the rotation 
@@ -171,7 +188,7 @@ public class Player {
             
         }
         if(baseSprite.getBoundingRectangle().x >= MAP_ROAD_RIGHT_BOUNDS-offsetX){
-            System.out.println("Collison with road bound right");
+           // System.out.println("Collison with road bound right");
             isBoundColliding = true;
             velocityX = 0;
             baseSprite.setRotation(0);
@@ -184,7 +201,7 @@ public class Player {
 
     private Texture playerTexture;
     private boolean isAlive = true;
-    private float positionX = 375f;
+    private float positionX = Gdx.graphics.getWidth()/2;
     private float positionY = 100f;
     private float velocityX = 0f;
     public float velocityY = 0f;
@@ -193,10 +210,8 @@ public class Player {
     private float deAcceleration = -25;
     private float maxSpeed = 1000f; //possibly have seperate max speeds for x and y axis, the original maxspeed wsa 100 for the x axis
     private float friction = 0.1f;
-    private Sprite pSprites;
     private Sprite baseSprite;
     private ArrayList<Sprite> pSpriteArray;
     //private Sprite sprite;
-    private float frame = 0;
     
 }
