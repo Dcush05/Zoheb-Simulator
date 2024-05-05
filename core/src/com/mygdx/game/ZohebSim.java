@@ -39,10 +39,6 @@ public class ZohebSim extends ApplicationAdapter {
 	
 
 
-// Keep track of the time passed since the last score increment
-//private float timeSinceLastScore = 0;
-
-
 
 	@Override
 	public void create () {
@@ -79,9 +75,7 @@ public class ZohebSim extends ApplicationAdapter {
 			if(entityCollision.collisionDetection(player.getAABB(), map1.enemyAABBs.get(i))){
 			//	map1.enemies.removeIndex(i);
 			
-			    
-
-      
+			      gameEnd();
 
 				//System.out.println("Collision is true silly");
 			} 
@@ -89,6 +83,7 @@ public class ZohebSim extends ApplicationAdapter {
 
 		}
 	}
+	//obstacle collision set score back to 0 LOL!
 
    		
 	

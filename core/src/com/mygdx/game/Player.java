@@ -81,7 +81,7 @@ public class Player {
 }
 
     public void horizontalMovement(float deltaTime){
-        if (accelerationX == 0) {
+               if (accelerationX == 0) {
             if (velocityX > 0) {
                 velocityX -= friction * deltaTime;
                 if (velocityX < 0) velocityX = 0;
@@ -92,6 +92,8 @@ public class Player {
             
             
         }
+         
+        
     
         // Update velocity
         velocityX += accelerationX * deltaTime;
@@ -137,6 +139,9 @@ public class Player {
             accelerationX = -100;
             baseSprite.setRotation(baseSprite.getRotation()+rotation*deltaTime);
 
+        }
+        else{
+            accelerationX = 0;
         }
 
         
@@ -197,7 +202,7 @@ public class Player {
         }
         return isBoundColliding;
     }
-  
+
 
     private Texture playerTexture;
     private boolean isAlive = true;
@@ -208,8 +213,8 @@ public class Player {
     private float accelerationX = 0;
     private float accelerationY = 0;
     private float deAcceleration = -25;
-    private float maxSpeed = 1000f; //possibly have seperate max speeds for x and y axis, the original maxspeed wsa 100 for the x axis
-    private float friction = 0.1f;
+    private float maxSpeed = 100000f; //possibly have seperate max speeds for x and y axis, the original maxspeed wsa 100 for the x axis
+    private float friction = 0.5f; //affects the handeling of the car
     private Sprite baseSprite;
     private ArrayList<Sprite> pSpriteArray;
     //private Sprite sprite;
