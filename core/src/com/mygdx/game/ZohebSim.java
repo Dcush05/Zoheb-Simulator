@@ -12,11 +12,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Util.Collision;
 import com.mygdx.game.Util.Fps;
+import com.mygdx.game.Util.SoundManager;
 
 public class ZohebSim extends ApplicationAdapter {
 	//*  means done i think idk
 	//- means work on
-	//TODO: Sprite creation for both player and enemies(including targets)-, Spritestacking(maybe)*, maybe impprove on player movement plz-,ENEMY ENTITIES-, Score-, Music, Radio, UI(SCORE,HighScore, lives(maybe), Radio, Speedometer-), Textfile serilization, menu(mode sselections)
+	//TODO: Sprite creation for both player and enemies(including targets)*, Spritestacking(maybe)*, maybe impprove on player movement plz*,ENEMY ENTITIES*, Score*-, Music, Radio, UI(SCORE-,HighScore, lives(maybe), Radio, Speedometer-), Textfile serilization, menu(mode sselections)
 	//NOTE: When music gets implemented make sure to do scrollling speed calculations based on the pacing of the music, make sure to fix file structure for maps, when making sprites for the cars make them the same size, do obstacles
 	
 	SpriteBatch batch;
@@ -33,9 +34,9 @@ public class ZohebSim extends ApplicationAdapter {
 	OrthographicCamera camera;
 	private BitmapFont font12;
 	FreeTypeFontGenerator generator;
-
 	private boolean canScore = false;
-	obstacle test;
+	private SoundManager explosion;
+	private SoundManager pointIndicator;
 	
 
 
@@ -52,7 +53,8 @@ public class ZohebSim extends ApplicationAdapter {
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/prstart.ttf"));
 	   FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 	   parameter.size = 12;
-	  font12 = generator.generateFont(parameter);
+	   font12 = generator.generateFont(parameter);
+	   
 
 
 
@@ -64,18 +66,32 @@ public class ZohebSim extends ApplicationAdapter {
 		//camera.update();
 
 		map1.getEnemyAABB();
+		map1.getObstacleAABB();
+		player.update(Gdx.graphics.getDeltaTime());
+		scrollingSpeed = player.velocityY;
+		map1.setSpeed(scrollingSpeed); //use this function again in the future plz but for music
+		//System.out.println(scrollingSpeed);
+
+
+
+		player.roadBoundCollision(Map.MAP_ROAD_LEFT_BOUNDS, Map.MAP_ROAD_RIGHT_BOUNDS);
 
 		//System.out.println(entityCollision.collisionDetection(map1.enemyAABB, player.getAABB()));
 		//System.out.println(map1.enemyAABBs);
-
+		initSounds();
 
 		if(!map1.enemyAABBs.isEmpty()){
 		for(int i = 0; i < map1.enemyAABBs.size; i++){
 			// enemyAABB = new Rectangle(map1.enemyAABBs.get(i).x, map1.enemyAABBs.get(i).y, map1.enemyAABBs.get(i).width, map1.enemyAABBs.get(i).height);
 			if(entityCollision.collisionDetection(player.getAABB(), map1.enemyAABBs.get(i))){
 			//	map1.enemies.removeIndex(i);
+			    explosion.playSound(1f, false);
+
+				 gameEnd();
+
+
 			
-			      gameEnd();
+			      //gameEnd();
 
 				//System.out.println("Collision is true silly");
 			} 
@@ -83,8 +99,17 @@ public class ZohebSim extends ApplicationAdapter {
 
 		}
 	}
-	//obstacle collision set score back to 0 LOL!
+		if(!map1.obAABB.isEmpty()){
+			for(int i = 0; i < map1.obAABB.size; i++){
+				if(entityCollision.collisionDetection(player.getAABB(), map1.obAABB.get(i))){
+					score = 0;
+					explosion.playSound(1f, false);
+					map1.obAABB.removeIndex(i);
 
+				}
+			}
+		}
+     
    		
 	
 
@@ -94,7 +119,8 @@ public class ZohebSim extends ApplicationAdapter {
 			// enemyAABB = new Rectangle(map1.enemyAABBs.get(i).x, map1.enemyAABBs.get(i).y, map1.enemyAABBs.get(i).width, map1.enemyAABBs.get(i).height);
 			
 			  if (player.getOriginalPositionY() == map1.enemyAABBs.get(i).y) { //rotation causes along the y axis which make it so that it this statement is never true	                                                    
-					canScore =true; //if i just do it based on whether or not the enemy is at a set position along the y axis(player.getogPosition returns the original positon)			
+					canScore =true; //if i just do it based on whether or not the enemy is at a set position along the y axis(player.getogPosition returns the original positon)	
+					pointIndicator.playSound(0.5f, false);		
 					map1.enemyAABBs.removeIndex(i); //if i use the AABB that is given it will be scuffed, doesnt matter though realistically we are only changing the positon of the sprite along the x-axis
 					break;
 
@@ -115,6 +141,7 @@ public class ZohebSim extends ApplicationAdapter {
 			
 			  if (player.getOriginalPositionY() == map1.obAABB.get(i).y) { //rotation causes along the y axis which make it so that it this statement is never true	                                                    
 					canScore =true; //if i just do it based on whether or not the enemy is at a set position along the y axis(player.getogPosition returns the original positon)			
+					pointIndicator.playSound(0.5f, false);		
 					map1.obAABB.removeIndex(i); //if i use the AABB that is given it will be scuffed, doesnt matter though realistically we are only changing the positon of the sprite along the x-axis
 					System.out.println("meow");
 					break;
@@ -123,6 +150,7 @@ public class ZohebSim extends ApplicationAdapter {
 						
 				}	
 				if (canScore) {
+
 				score+=map1.getObstaclePoint();
 				System.out.println(score);
 				canScore = false;
@@ -136,14 +164,7 @@ public class ZohebSim extends ApplicationAdapter {
 	//scoring
 	//System.out.println(canScore);
 	
-		player.update(Gdx.graphics.getDeltaTime());
-		scrollingSpeed = player.velocityY;
-		map1.setSpeed(scrollingSpeed); //use this function again in the future plz but for music
-		//System.out.println(scrollingSpeed);
-
-
-
-		player.roadBoundCollision(Map.MAP_ROAD_LEFT_BOUNDS, Map.MAP_ROAD_RIGHT_BOUNDS);
+		
 	     
 		ScreenUtils.clear(1, 1, 1, 1);
       // batch.setProjectionMatrix(camera.combined);
@@ -177,12 +198,21 @@ public class ZohebSim extends ApplicationAdapter {
 		player.dispose();
 		map1.dispose();
 	   generator.dispose();
+	   explosion.dispose();
+	   pointIndicator.dispose();
 		
+	}
+	public void initSounds(){
+	      explosion = new SoundManager("assets/music/explosion.wav");
+		  pointIndicator = new SoundManager("assets/music/point.wav");
+
+
 	}
 	public void gameEnd(){
 		Gdx.app.exit();
 		System.exit(-1);
 	}
+
 
 	
 }

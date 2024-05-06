@@ -37,7 +37,7 @@ public class Map {
     }
     public void update(){
         getEnemyAABB();
-        getObEnemyAABB();
+        getObstacleAABB();
     }
     
     public void setSpeed(float playerVel){
@@ -79,7 +79,7 @@ public class Map {
             enemyAABBs.add(enemies.get(i).getAABB());
         }
     }
-    public void getObEnemyAABB(){
+    public void getObstacleAABB(){
         for(int  i = 0;i < obstacles.size;i++){
             obAABB.add(obstacles.get(i).getAABB());
 
