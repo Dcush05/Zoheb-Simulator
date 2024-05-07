@@ -66,7 +66,9 @@ public class MainGame implements Screen {
 	   sounds = new SoundManager();
 	   radio1 = new ArrayList<>();
 	  //radio1.add("Death Of Pop");
+	   radio1.add("my mouth");
 	   radio1.add("A Hot Saturday");
+	   radio1.add("Death Of Pop");
 	   radio = new Radios(radio1);
 	   radio.playRadioMusic();
 	  
