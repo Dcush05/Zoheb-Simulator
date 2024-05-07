@@ -8,7 +8,6 @@ public class Collision {
         boolean isColliding = false;
         if(AABB1.overlaps(AABB2)){
             isColliding = true;
-            System.out.println("Collision is workingg");
         }
         return isColliding; 
     }

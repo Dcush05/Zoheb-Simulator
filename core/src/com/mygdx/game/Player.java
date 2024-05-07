@@ -203,9 +203,8 @@ public class Player {
         return isBoundColliding;
     }
 
-
     private Texture playerTexture;
-    private boolean isAlive = true;
+    //private boolean isAlive = true;
     private float positionX = Gdx.graphics.getWidth()/2;
     private float positionY = 100f;
     private float velocityX = 0f;
@@ -213,8 +212,8 @@ public class Player {
     private float accelerationX = 0;
     private float accelerationY = 0;
     private float deAcceleration = -25;
-    private float maxSpeed = 100000f; //possibly have seperate max speeds for x and y axis, the original maxspeed wsa 100 for the x axis
-    private float friction = 0.5f; //affects the handeling of the car
+    private float maxSpeed = 1500f; 
+    private float friction = 0.3f; //affects the handeling of the car
     private Sprite baseSprite;
     private ArrayList<Sprite> pSpriteArray;
     //private Sprite sprite;

@@ -13,6 +13,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60); //game starts acting weird below 35 sigh
 		config.setTitle("Zoheb Simulator");
 		config.setWindowedMode(750, 900);
+		config.setResizable(false);
 		config.setWindowSizeLimits(750, 900, 750, 900); //LOL! VERY IMPORTANT SO NO ONE CHANGES TO FULL SCREEN
 		config.setIdleFPS(25);
 		new Lwjgl3Application(new ZohebSim(), config);

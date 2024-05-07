@@ -155,8 +155,8 @@ public class Map {
      }
     private ScrollingBackground background;
     private Texture mapTexture;
-    private float enemySpawnInterval = 2f; //to lower spawn rate increase interval
-    private float obstacleSpawnInterval = 5f;
+    private float enemySpawnInterval = 1f; //to lower spawn rate increase interval
+    private float obstacleSpawnInterval = 4.5f;
     private float obstacleTimeSinceLastSpawn = 0;
     private float enemyTimeSinceLastSpawn = 0;
     private EnemyVehicle enemy;
