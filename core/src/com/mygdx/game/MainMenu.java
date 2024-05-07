@@ -75,7 +75,7 @@ public class MainMenu implements Screen {
 		qouteParam = new FreeTypeFontParameter();
 		sounds = new SoundManager();
 		qouteParam.size = 10;
-		qouteParam.color = Color.YELLOW;
+		qouteParam.color = Color.RED;
 	    parameter.size = 35;
 	    font12 = generator.generateFont(parameter);
 		funQoutes = generator.generateFont(qouteParam);
