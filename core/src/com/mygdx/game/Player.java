@@ -1,5 +1,4 @@
 package com.mygdx.game;
-
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
@@ -13,6 +12,7 @@ public class Player {
     public String name;
     private static final int SPRITE_WIDTH = 32;
     private static final int SPRITE_HEIGHT = 32;
+   // private int frame = 0;
     //256X256 8 sprites each sprite is 32x32
     Player(String name){
         this.name = name;
@@ -41,7 +41,7 @@ public class Player {
                // Texture spriteTexture = new Texture("car.png");
                 Sprite rotatedSprite = new Sprite(playerTexture, startX, startY, SPRITE_WIDTH,SPRITE_HEIGHT);
                 rotatedSprite.setRotation(baseSprite.getRotation());
-             //  rotatedSprite.setRotation(frame);
+                // rotatedSprite.setRotation(frame);
                 rotatedSprite.setPosition(baseSprite.getX() + spreadOffset, baseSprite.getY()- spreadOffset);
                // rotatedSprite.setScale(2);
                 //Sprite sprite = new Sprite(spriteTexture, startX, startY, 16, 16);
@@ -49,7 +49,6 @@ public class Player {
                //sprite.setPosition(baseSprite.getX() + startX, baseSprite.getY() + startY);
                 sprite.setPosition(baseSprite.getX() + spreadOffset, baseSprite.getY() - spreadOffset);
                 pSpriteArray.add(sprite); 
-               // frame += 0.5f; 
             }
          for (Sprite sprite:pSpriteArray){
             sprite.draw(target);

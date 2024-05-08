@@ -97,6 +97,7 @@ public class MainMenu implements Screen {
 						sounds.playSound("click", 1, false);
 				//		sounds.stopSound("click");
 						sounds.stopSound("menu");
+						game.dispose();
                         Gdx.app.exit();
                         return true; // Consume the event
                     }

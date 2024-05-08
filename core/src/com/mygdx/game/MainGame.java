@@ -66,9 +66,9 @@ public class MainGame implements Screen {
 	   sounds = new SoundManager();
 	   radio1 = new ArrayList<>();
 	  //radio1.add("Death Of Pop");
-	   radio1.add("my mouth");
-	   radio1.add("A Hot Saturday");
-	   radio1.add("Death Of Pop");
+	   radio1.add("my mouth");  //My eyes - travis scott
+	   radio1.add("A Hot Saturday"); // A cold sunday - lil yatchhy
+	   radio1.add("Death Of Pop"); //Birth of Rap - Lil B
 	   radio = new Radios(radio1);
 	   radio.playRadioMusic();
 	  
@@ -96,6 +96,7 @@ public class MainGame implements Screen {
 			// enemyAABB = new Rectangle(map1.enemyAABBs.get(i).x, map1.enemyAABBs.get(i).y, map1.enemyAABBs.get(i).width, map1.enemyAABBs.get(i).height);
 			if(entityCollision.collisionDetection(player.getAABB(), map1.enemyAABBs.get(i))){
 			//	map1.enemies.removeIndex(i);
+
 			gameEnd();
 
 				//System.out.println("Collision is true silly");
@@ -181,9 +182,9 @@ public class MainGame implements Screen {
 		batch.dispose();
 		player.dispose();
 		map1.dispose();
-	   generator.dispose();
-	   sounds.dispose();
-	   radio.dispose();
+	    generator.dispose();
+	    sounds.dispose();
+	    radio.dispose();
 
 	}
 	public void initSounds(){
@@ -192,10 +193,12 @@ public class MainGame implements Screen {
 
 	}
 	public void gameEnd(){
-		saveScoreToFileIfHigher(score);
-		game.setScreen(new MainMenu(game));
-		radio.stopMusic();
 		
+	    saveScoreToFileIfHigher(score);
+		game.setScreen(new MainMenu(game));
+		game.dispose();
+		radio.stopMusic();
+
 
 		//Gdx.app.exit();
 		//System.exit(-1);

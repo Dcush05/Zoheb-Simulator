@@ -14,6 +14,7 @@ public class obstacle {
         obstacleTextures = new Texture("assets/entities/obstacles/traffic-cone.png");
         defaultSprite = new Sprite(obstacleTextures, 0,0,16,16);
         obstacleSprites = new Array<Sprite>();
+        
 
 
     }
