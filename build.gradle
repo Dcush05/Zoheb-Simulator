@@ -28,6 +28,7 @@ allprojects {
         ashleyVersion = '1.7.4'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.2.1'
+        lwjglVersion = '3.3.3' 
     }
 
     repositories {
@@ -52,6 +53,10 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+
+        api "org.lwjgl:lwjgl:$lwjglVersion"
+        api "org.lwjgl:lwjgl-opengl:$lwjglVersion"
+        api "org.lwjgl:lwjgl-opengl:$lwjglVersion:natives-desktop"
 
 
 
@@ -83,6 +88,8 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        implementation "org.lwjgl:lwjgl:3.3.3"
+        implementation "org.lwjgl:lwjgl-opengl:3.3.3"
       
 
 

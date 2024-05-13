@@ -31,7 +31,7 @@ public class Player {
    public void loadSpriteStack(SpriteBatch target, float rotation, float offset){
     int spriteW = playerTexture.getWidth()/SPRITE_WIDTH; //top row is for stacking sprites
     int startY = 0;
-    pSpriteArray.clear(); ///clears the array of sprites before adding a new one IMPORTANT PLZ DONT TOUCH
+    //pSpriteArray.clear(); ///clears the array of sprites before adding a new one IMPORTANT PLZ DONT TOUCH
     //Kendrick is one of the best rappers alive and Lebron is my favorite NBA player :D - Dylan Jaden Cushnie
 
             for(int x = 0; x < spriteW; x++){
